@@ -1,0 +1,137 @@
+#include <iostream>
+#include <string>
+#include <bits/stdc++.h>
+#include <limits.h>
+#include <stdio.h>
+#include <iostream>
+using namespace std;
+using namespace std;
+
+// Forward declaration of Ability class
+class Ability;
+
+// Character class
+class Character {
+protected:
+    string name;
+    int health;
+    int level;
+public:
+    Character(string _name, int _health, int _level) : name(_name), health(_health), level(_level) {}
+    virtual void useAbility(Ability* ability) = 0; // Virtual function for using abilities
+    void displayStatus() {
+        cout << "Name: " << name << ", Health: " << health << ", Level: " << level << endl;
+    }
+};
+
+// Ability class
+class Ability {
+protected:
+    string name;
+    int damage;
+    int manaCost;
+public:
+    Ability(string _name, int _damage, int _manaCost) : name(_name), damage(_damage), manaCost(_manaCost) {}
+    virtual void execute() = 0; // Virtual function for executing the ability
+    void displayAbility() {
+        cout << "Ability: " << name << ", Damage: " << damage << ", Mana Cost: " << manaCost << endl;
+    }
+};
+
+// Warrior class, inherits from Character
+class Warrior : public Character {
+public:
+    Warrior(string _name, int _health, int _level) : Character(_name, _health, _level) {}
+    void useAbility(Ability* ability) override {
+        cout << "Warrior " << name << " is using ability: " << ability->name << endl;
+        ability->execute();
+    }
+};
+
+// Archer class, inherits from Character
+class Archer : public Character {
+public:
+    Archer(string _name, int _health, int _level) : Character(_name, _health, _level) {}
+    void useAbility(Ability* ability) override {
+        cout << "Archer " << name << " is using ability: " << ability->name << endl;
+        ability->execute();
+    }
+};
+
+// Mage class, inherits from Character
+class Mage : public Character {
+public:
+    Mage(string _name, int _health, int _level) : Character(_name, _health, _level) {}
+    void useAbility(Ability* ability) override {
+        cout << "Mage " << name << " is using ability: " << ability->name << endl;
+        ability->execute();
+    }
+};
+
+// Fireball ability, inherits from Ability
+class Fireball : public Ability {
+public:
+    Fireball() : Ability("Fireball", 50, 20) {}
+    void execute() override {
+        cout << "Casting Fireball! Deals " << damage << " damage and costs " << manaCost << " mana." << endl;
+    }
+};
+
+// Arrow ability, inherits from Ability
+class Arrow : public Ability {
+public:
+    Arrow() : Ability("Arrow", 30, 10) {}
+    void execute() override {
+        cout << "Firing Arrow! Deals " << damage << " damage and costs " << manaCost << " mana." << endl;
+    }
+};
+
+// SwordSlash ability, inherits from Ability
+class SwordSlash : public Ability {
+public:
+    SwordSlash() : Ability("Sword Slash", 40, 15) {}
+    void execute() override {
+        cout << "Performing Sword Slash! Deals " << damage << " damage and costs " << manaCost << " mana." << endl;
+    }
+};
+
+int main() {
+    // Create characters
+    Character* warrior = new Warrior("Warrior1", 100, 5);
+    Character* archer = new Archer("Archer1", 80, 3);
+Character* mage = new Mage("Mage1", 60, 7);
+// Create abilities
+Ability* fireball = new Fireball();
+Ability* arrow = new Arrow();
+Ability* swordSlash = new SwordSlash();
+
+// Display initial status of characters
+warrior->displayStatus();
+archer->displayStatus();
+mage->displayStatus();
+
+// Display abilities
+fireball->displayAbility();
+arrow->displayAbility();
+swordSlash->displayAbility();
+
+// Use abilities
+warrior->useAbility(fireball);
+archer->useAbility(arrow);
+mage->useAbility(swordSlash);
+
+// Update status of characters after using abilities
+warrior->displayStatus();
+archer->displayStatus();
+mage->displayStatus();
+
+// Clean up memory
+delete warrior;
+delete archer;
+delete mage;
+delete fireball;
+delete arrow;
+delete swordSlash;
+
+return 0;
+}
